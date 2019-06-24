@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Pin Pon</title>
+  <meta name="author" content="xendke">
+
+</head>
+
+<body>
+  <script>
+    var HOST = location.origin.replace(/^http/, 'ws')
+    var ws = new WebSocket(HOST);
+    var el = document.getElementById('server-time');
+
+    ws.onmessage = function (event) {
+        el.innerHTML = 'Server time: ' + event.data;
+    };
+  </script>
+</body>
+</html>
