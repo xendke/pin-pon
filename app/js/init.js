@@ -16,55 +16,60 @@ var ball = new Ball(ctx);
 var side;
 
 function draw() { // main drawing loop
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ball.draw();
-    p1.draw();
-    p2.draw();
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ball.draw();
+	p1.draw();
+	p2.draw();
 }
 
 ws.onmessage = function (event) { // web sockets handler
-    if(typeof event.data !== 'string') throw 'event data is not a string';
-    let data = JSON.parse(event.data);
+	if(typeof event.data !== 'string') throw 'event data is not a string';
+	let data = JSON.parse(event.data);
 
-    if(data.type === 'set_side') {
-        side = data.side;
-    } else if (data.type === 'error') {
-        throw data.error;
-    } else if(data.type === 'update') {
-        p1.moveTo(data.p1.x, data.p1.y);
-        p2.moveTo(data.p2.x, data.p2.y);
-        ball.moveTo(data.ball.x, data.ball.y);
-        scoresElement.innerHTML = `p1: ${data.p1.score} p2: ${data.p2.score}`;
-    }
+	switch(data.type) {
+		case 'set_side':
+			side = data.side;
+			break;
+		case 'error':
+			throw data.error;
+			break;
+		case 'update':
+			p1.moveTo(data.p1.x, data.p1.y);
+			p2.moveTo(data.p2.x, data.p2.y);
+			ball.moveTo(data.ball.x, data.ball.y);
+			scoresElement.innerHTML = `p1: ${data.p1.score} p2: ${data.p2.score}`;
+			break;
+		default:
+			break;
+	}
 };
 
 ws.onopen = function open() { // on connect
-    const data = {
-        type: 'player_ready'
-    }
-    ws.send(JSON.stringify(data));
+	const data = {
+		type: 'player_ready'
+	}
+	ws.send(JSON.stringify(data));
 
-    setInterval(draw, 100);
+	setInterval(draw, 10);
 };
 
 // keyboard handler
-document.onkeydown = checkKey;
-function checkKey(e) {
-    e = e || window.event;
+document.onkeydown = function checkKey(e) {
+	e = e || window.event;
 
-    const data = {
-        type: 'move',
-        direction: '',
-        side: side,
-    }
+	const data = {
+		type: 'move',
+		direction: '',
+		side: side,
+	}
 
-    if (e.keyCode == '38') {
-        data.direction = 'UP';
-    } else if (e.keyCode == '40') {
-        data.direction = 'DOWN';
-    }
+	if (e.keyCode == '38') {
+		data.direction = 'UP';
+	} else if (e.keyCode == '40') {
+		data.direction = 'DOWN';
+	}
 
-    if(data.direction !== ''){
-        ws.send(JSON.stringify(data));
-    }
+	if(data.direction !== ''){
+		ws.send(JSON.stringify(data));
+	}
 }

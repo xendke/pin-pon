@@ -1,15 +1,15 @@
 class Ball {
 	constructor() {
-			this.x = 130;
-			this.y = 80;
-			this.vx = 5;
-			this.vy = 5;
+		this.x = 130;
+		this.y = 80;
+		this.vx = 5;
+		this.vy = 5;
 	}
 	getX() {
-			return this.x;
+		return this.x;
 	}
 	getY() {
-			return this.y;
+		return this.y;
 	}
 	move(p1x, p1y, p2x, p2y) {
 		if(this.x >= 300) {
@@ -34,9 +34,9 @@ class Ball {
 		this.x += this.vx;
 		this.y += this.vy;
 	}
-		moveTo(x, y) {
-			this.x = x;
-			this.y = y;
+	moveTo(x, y) {
+		this.x = x;
+		this.y = y;
 	}
 	
 }
