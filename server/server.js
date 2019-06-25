@@ -19,15 +19,15 @@ const wss = new SocketServer({ server });
 const ball = new Ball();
 const playerOne = new Paddle('left');
 const playerTwo = new Paddle('right');
+const game = new Gamepad(ball, playerOne, playerTwo);
 
 let players = [];
 
-let scores = [0, 0];
-
 function gameLoop() {
 	if(players.length >= 2) {
-		let win = ball.move(playerOne.getX(), playerOne.getY(), playerTwo.getX(), playerTwo.getY());
-		scores[win] +=1;
+		ball.move();
+		game.checkForWin();
+		game.handleCollisions();
 	}
 }
 
@@ -37,20 +37,7 @@ wss.on('connection', (ws) => {
 	wss.clients.forEach((client) => {
 		let data = {
 			type: 'config',
-			p1: {
-				x: playerOne.getX(),
-				y: playerOne.getY(),
-				score: scores[0]
-			},
-			p2: {
-				x: playerTwo.getX(),
-				y: playerTwo.getY(),
-				score: scores[1]
-			},
-			ball: {
-				x: ball.getX(),
-				y: ball.getY()
-			}
+			...game.getGameData()
 		}
 		client.send(JSON.stringify(data));
 	});
@@ -84,20 +71,7 @@ wss.on('connection', (ws) => {
 		wss.clients.forEach((client) => {
 			let data = {
 				type: 'update',
-				p1: {
-					x: playerOne.getX(),
-					y: playerOne.getY(),
-					score: scores[0]
-				},
-				p2: {
-					x: playerTwo.getX(),
-					y: playerTwo.getY(),
-					score: scores[1]
-				},
-				ball: {
-					x: ball.getX(),
-					y: ball.getY()
-				}
+				...game.getGameData()
 			}
 			client.send(JSON.stringify(data));
 		});

@@ -4,6 +4,7 @@ class Paddle {
 		this.y = 0;
 		this.width = 10;
 		this.height = 75;
+		this.score = 0;
 		if(side === 'right') {
 			this.x = 300 - this.width;
 		}
@@ -13,6 +14,9 @@ class Paddle {
 	}
 	getY() {
 		return this.y;
+	}
+	getScore() {
+		return this.score;
 	}
 	moveTo(x, y) {
 		this.x = x;
@@ -25,5 +29,9 @@ class Paddle {
 			this.y = this.y + 10;
 		}   
 	}
+	incrementScore() {
+		this.score = this.score + 1;
+	}
 }
+
 module.exports = Paddle;
