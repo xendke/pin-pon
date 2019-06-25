@@ -2,8 +2,8 @@ class Ball {
 	constructor() {
 			this.x = 130;
 			this.y = 80;
-			this.vx = 2;
-			this.vy = 2;
+			this.vx = 5;
+			this.vy = 5;
 	}
 	getX() {
 			return this.x;
