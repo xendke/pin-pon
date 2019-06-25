@@ -6,6 +6,7 @@ const path = require('path');
 
 const Ball = require('./ball');
 const Paddle = require('./paddle');
+const Game = require('./game');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = path.join(__dirname, '..','app');
@@ -19,7 +20,7 @@ const wss = new SocketServer({ server });
 const ball = new Ball();
 const playerOne = new Paddle('left');
 const playerTwo = new Paddle('right');
-const game = new Gamepad(ball, playerOne, playerTwo);
+const game = new Game(ball, playerOne, playerTwo);
 
 let players = [];
 
