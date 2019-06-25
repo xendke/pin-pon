@@ -55,17 +55,17 @@ wss.on('connection', (ws) => {
 		client.send(JSON.stringify(data));
 	});
 
-	ws.on('message', function incoming(data) {
+	wss.on('message', function incoming(data) {
 		data = JSON.parse(data);
 		if(data.type === 'player_ready'){
 			players.push('_');
 			if(players.length > 2) {
-				ws.send(JSON.stringify({
+				wss.send(JSON.stringify({
 					type: 'error',
 					error: 'too many players'
 				}));
 			}
-			ws.send(JSON.stringify({
+			wss.send(JSON.stringify({
 				type: 'set_side',
 				side: (players.length === 1 ? 'left' : 'right')
 			}));
@@ -103,7 +103,7 @@ wss.on('connection', (ws) => {
 		});
 	}, 100);
 
-	ws.on('close', () => {
+	wss.on('close', () => {
 		players.pop();
 	});
 });
