@@ -7,6 +7,8 @@ var HOST = location.origin.replace(/^http/, 'ws');
 
 var ws = new WebSocket(HOST);
 var ctx = canvas.getContext("2d");
+var scoresElement = document.getElementById('scores');
+
 
 var p1 = new Paddle(ctx);
 var p2 = new Paddle(ctx);
@@ -32,6 +34,7 @@ ws.onmessage = function (event) { // web sockets handler
         p1.moveTo(data.p1.x, data.p1.y);
         p2.moveTo(data.p2.x, data.p2.y);
         ball.moveTo(data.ball.x, data.ball.y);
+        scoresElement.innerHTML = `p1: ${data.p1.score} p2: ${data.p2.score}`;
     }
 };
 

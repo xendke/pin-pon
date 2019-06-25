@@ -22,10 +22,13 @@ const playerTwo = new Paddle('right');
 
 let players = [];
 
+let scores = [0, 0];
+
 function gameLoop() {
-  // if(players.length >= 2) {
-    ball.move();
-  // }
+  if(players.length >= 2) {
+    let win = ball.move(playerOne.getX(), playerOne.getY(), playerTwo.getX(), playerTwo.getY());
+    scores[win] +=1;
+  }
 }
 
 wss.on('connection', (ws) => {
@@ -36,11 +39,13 @@ wss.on('connection', (ws) => {
       type: 'config',
       p1: {
         x: playerOne.getX(),
-        y: playerOne.getY()
+        y: playerOne.getY(),
+        score: scores[0]
       },
       p2: {
         x: playerTwo.getX(),
-        y: playerTwo.getY()
+        y: playerTwo.getY(),
+        score: scores[1]
       },
       ball: {
         x: ball.getX(),
@@ -81,11 +86,13 @@ wss.on('connection', (ws) => {
         type: 'update',
         p1: {
           x: playerOne.getX(),
-          y: playerOne.getY()
+          y: playerOne.getY(),
+          score: scores[0]
         },
         p2: {
           x: playerTwo.getX(),
-          y: playerTwo.getY()
+          y: playerTwo.getY(),
+          score: scores[1]
         },
         ball: {
           x: ball.getX(),
