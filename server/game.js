@@ -6,16 +6,16 @@ class Game {
 		this.scores = [0, 0];
 	}
 	checkForWin() {
-        if(this.x >= 300) {
+        if(this.ball.x >= 300) {
 			this.ball.reset();
 			this.p1.incrementScore();
-		} else if(this.x <= 0) {
+		} else if(this.ball.x <= 0) {
 			this.ball.reset();
 			this.p2.incrementScore();
 		}
 	}
 	handleCollisions() {
-		if(this.y >= 300 || this.y <= 0) {
+		if(this.ball.y >= 300 || this.ball.y <= 0) {
 			this.ball.bounce('VERTICAL');
 		}
 		if(

@@ -29,15 +29,15 @@ ws.onmessage = function (event) { // web sockets handler
 	switch(data.type) {
 		case 'set_side':
 			side = data.side;
+			console.log(side);
 			break;
 		case 'error':
 			throw data.error;
-			break;
 		case 'update':
 			p1.moveTo(data.p1.x, data.p1.y);
 			p2.moveTo(data.p2.x, data.p2.y);
 			ball.moveTo(data.ball.x, data.ball.y);
-			scoresElement.innerHTML = `p1: ${data.p1.score} p2: ${data.p2.score}`;
+			scoresElement.innerHTML = `Player One: ${data.p1.score} || Player Two: ${data.p2.score}`;
 			break;
 		default:
 			break;
