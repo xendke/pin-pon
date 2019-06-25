@@ -55,8 +55,6 @@ ws.onopen = function open() { // on connect
 
 // keyboard handler
 document.onkeydown = function checkKey(e) {
-	e = e || window.event;
-
 	const data = {
 		type: 'move',
 		direction: '',
@@ -68,7 +66,6 @@ document.onkeydown = function checkKey(e) {
 	} else if (e.keyCode == '40') {
 		data.direction = 'DOWN';
 	}
-
 	if(data.direction !== ''){
 		ws.send(JSON.stringify(data));
 	}
