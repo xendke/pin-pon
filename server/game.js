@@ -1,12 +1,16 @@
+const Ball = require('./ball');
+const Paddle = require('./paddle');
+
 class Game {
-	constructor(ball, p1, p2) {
-		this.ball = ball;
-		this.p1 = p1;
-		this.p2 = p2;
-		this.scores = [0, 0];
+	constructor() {
+		this.ball = new Ball();
+		this.p1 = new Paddle('left');
+		this.p2 = new Paddle('right');
+
+		this.players = [];
 	}
 	checkForWin() {
-        if(this.ball.x >= 300) {
+    if(this.ball.x >= 300) {
 			this.ball.reset();
 			this.p1.incrementScore();
 		} else if(this.ball.x <= 0) {
@@ -24,6 +28,32 @@ class Game {
 		) {
 			this.ball.bounce('HORIZONTAL');
 		}
+	}
+	tick() {
+		if(this.players.length >= 2) {
+			this.ball.move();
+			this.checkForWin();
+			this.handleCollisions();
+		}
+	}
+	movePaddle(whichPaddle, directionToMove) {
+		if(whichPaddle === 'left') {
+			this.p1.move(directionToMove);
+		} else if(whichPaddle === 'right') {
+			this.p2.move(directionToMove);
+		}
+	}
+	reset() {
+		this.ball.reset();
+		this.p1.reset('left');
+		this.p2.reset('right');
+	}
+	getAvailableSide() {
+		if(this.players.length >= 2) {
+			throw 'no available sides';
+		}
+		if(this.players.length === 0) return 'left';
+		else return this.players[0].side === 'left' ? 'right' : 'left';
 	}
 	getGameData() {
 		return {

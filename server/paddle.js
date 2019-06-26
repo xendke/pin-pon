@@ -1,13 +1,8 @@
 class Paddle {
 	constructor(side) {
-		this.x = 0;
-		this.y = 0;
 		this.width = 10;
 		this.height = 75;
-		this.score = 0;
-		if(side === 'right') {
-			this.x = 300 - this.width;
-		}
+		this.reset(side);
 	}
 	getX() {
 		return this.x;
@@ -28,6 +23,14 @@ class Paddle {
 		} else if(direction === 'DOWN' && this.y < 300 - this.height){
 			this.y = this.y + 10;
 		}   
+	}
+	reset(side) {
+		this.score = 0;
+		this.x = 0;
+		this.y = 0;
+		if(side === 'right') {
+			this.x = 300 - this.width;
+		}
 	}
 	incrementScore() {
 		this.score = this.score + 1;

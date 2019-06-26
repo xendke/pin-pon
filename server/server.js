@@ -1,11 +1,8 @@
 'use strict';
 
 const express = require('express');
-const SocketServer = require('ws').Server;
 const path = require('path');
-
-const Ball = require('./ball');
-const Paddle = require('./paddle');
+const SocketServer = require('ws').Server;
 const Game = require('./game');
 
 const PORT = process.env.PORT || 3000;
@@ -16,58 +13,54 @@ const server = express()
 	.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const wss = new SocketServer({ server });
+const game = new Game();
 
-const ball = new Ball();
-const playerOne = new Paddle('left');
-const playerTwo = new Paddle('right');
-const game = new Game(ball, playerOne, playerTwo);
+wss.on('connection', (ws, req) => {
+  console.log('Client connected');
+  const clientId = req.headers['sec-websocket-key'];
 
-let players = [];
-
-function gameLoop() {
-	if(players.length >= 2) {
-		ball.move();
-		game.checkForWin();
-		game.handleCollisions();
-	}
-}
-
-wss.on('connection', (ws) => {
-	console.log('Client connected');
-
-	wss.clients.forEach((client) => {
-		let data = {
-			type: 'config',
-			...game.getGameData()
-		}
-		client.send(JSON.stringify(data));
-	});
+  let data = {
+    type: 'config',
+    // side: (players.length === 1 ? 'left' : 'right'),
+    id: clientId,
+    canvas: {
+      width: 300,
+      height: 300
+    }
+  }
+  ws.send(JSON.stringify(data));
 
 	ws.on('message', function incoming(data) {
-		data = JSON.parse(data);
-		if(data.type === 'player_ready'){
-			players.push('_');
-			if(players.length > 2) {
-				ws.send(JSON.stringify({
-					type: 'error',
-					error: 'too many players'
-				}));
-			}
-			ws.send(JSON.stringify({
-				type: 'set_side',
-				side: (players.length === 1 ? 'left' : 'right')
-			}));
-		} else if(data.type === 'move') {
-			if(data.side === 'left') {
-				playerOne.move(data.direction);
-			} else if(data.side === 'right') {
-				playerTwo.move(data.direction);
-			}
-		}
+    data = JSON.parse(data);
+    switch(data.type) {
+      case 'player_ready':
+        const side = game.getAvailableSide();
+        game.players.push({
+          clientId,
+          side,
+        });
+        if(game.players.length <= 2) {
+          ws.send(JSON.stringify({
+            type: 'set_side',
+            side
+          }));
+        } else {
+          ws.send(JSON.stringify({
+            type: 'error',
+            error: 'too many players'
+          }));
+        }
+        break;
+      case 'move':
+        game.movePaddle(data.side, data.direction);
+        break;
+      default:
+        break;
+    }
 	});
 
 	setInterval(() => {
-		gameLoop();
+		game.tick();
 		
 		wss.clients.forEach((client) => {
 			let data = {
@@ -78,8 +71,15 @@ wss.on('connection', (ws) => {
 		});
 	}, 100);
 
-	wss.on('close', () => {
+	ws.on('close', () => {
 		console.log('Client disconnected');
-		players.pop();
+    for( var i = 0; i < game.players.length; i++){
+      if (game.players[i] === clientId) {
+        game.players.splice(i, 1); 
+      }
+    }
+    if(game.players.length === 0) {
+      game.reset();
+    }
 	});
 });

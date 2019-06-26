@@ -27,9 +27,12 @@ ws.onmessage = function (event) { // web sockets handler
 	let data = JSON.parse(event.data);
 
 	switch(data.type) {
+		case 'config':
+			console.log('config', data);
+			break;
 		case 'set_side':
 			side = data.side;
-			console.log(side);
+			console.log('set_side', data);
 			break;
 		case 'error':
 			throw data.error;
