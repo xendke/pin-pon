@@ -21,7 +21,6 @@ wss.on('connection', (ws, req) => {
 
   let data = {
     type: 'config',
-    // side: (players.length === 1 ? 'left' : 'right'),
     id: clientId,
     canvas: {
       width: 300,
@@ -34,12 +33,8 @@ wss.on('connection', (ws, req) => {
     data = JSON.parse(data);
     switch(data.type) {
       case 'player_ready':
-        const side = game.getAvailableSide();
-        game.players.push({
-          clientId,
-          side,
-        });
         if(game.players.length <= 2) {
+          game.addPlayer();
           ws.send(JSON.stringify({
             type: 'set_side',
             side
@@ -73,11 +68,7 @@ wss.on('connection', (ws, req) => {
 
 	ws.on('close', () => {
 		console.log('Client disconnected');
-    for( var i = 0; i < game.players.length; i++){
-      if (game.players[i] === clientId) {
-        game.players.splice(i, 1); 
-      }
-    }
+    game.removePlayer(clientId);
     if(game.players.length === 0) {
       game.reset();
     }

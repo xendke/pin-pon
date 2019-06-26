@@ -43,17 +43,25 @@ class Game {
 			this.p2.move(directionToMove);
 		}
 	}
-	reset() {
-		this.ball.reset();
-		this.p1.reset('left');
-		this.p2.reset('right');
-	}
 	getAvailableSide() {
 		if(this.players.length >= 2) {
 			throw 'no available sides';
 		}
 		if(this.players.length === 0) return 'left';
 		else return this.players[0].side === 'left' ? 'right' : 'left';
+	}
+	addPlayer(clientId) {
+        this.players.push({
+          clientId,
+          side: this.getAvailableSide()
+        });
+	}
+	removePlayer(clientId) {
+		for( var i = 0; i < this.players.length; i++){
+			if (this.players[i].clientId === clientId) {
+				this.players.splice(i, 1); 
+			}
+		}
 	}
 	getGameData() {
 		return {
@@ -72,6 +80,11 @@ class Game {
 				y: this.ball.getY(),
 			}
 		};
+	}
+	reset() {
+		this.ball.reset();
+		this.p1.reset('left');
+		this.p2.reset('right');
 	}
 }
 
