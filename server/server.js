@@ -34,10 +34,10 @@ wss.on('connection', (ws, req) => {
     switch(data.type) {
       case 'player_ready':
         if(game.players.length <= 2) {
-          game.addPlayer();
+          game.addPlayer(clientId);
           ws.send(JSON.stringify({
             type: 'set_side',
-            side
+            side: game.playerSideOf(clientId)
           }));
         } else {
           ws.send(JSON.stringify({

@@ -50,6 +50,11 @@ class Game {
 		if(this.players.length === 0) return 'left';
 		else return this.players[0].side === 'left' ? 'right' : 'left';
 	}
+	playerSideOf(clientId) {
+		for( var i = 0; i < this.players.length; i++){
+			if(this.players[i].clientId === clientId) return this.players[i].side;
+		}
+	}
 	addPlayer(clientId) {
         this.players.push({
           clientId,
