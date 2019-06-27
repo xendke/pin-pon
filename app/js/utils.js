@@ -9,7 +9,9 @@ const scoresElement = document.getElementById('scores');
 if(!scoresElement) throw "canvas does not exits.";
 
 const updateScore = (data) => {
-	scoresElement.innerHTML = `Player One: ${data.p1.score} || Player Two: ${data.p2.score}`;
+	if(scoresElement.innerHTML !== `Player One: ${data.p1.score} || Player Two: ${data.p2.score}`) {
+		scoresElement.innerHTML = `Player One: ${data.p1.score} || Player Two: ${data.p2.score}`;
+	}
 }
 
 export {
