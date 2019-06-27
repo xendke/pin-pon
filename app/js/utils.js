@@ -1,5 +1,20 @@
-var canvas = document.getElementById('gameCanvas');
+const canvasElement = document.getElementById('gameCanvas');
+if(!canvasElement) throw "canvas does not exits.";
 
-if(!canvas) throw "canvas does not exits.";
+const getCanvasContext = () => {
+	return canvasElement.getContext("2d");
+}
 
-export { canvas };
+const scoresElement = document.getElementById('scores');
+if(!scoresElement) throw "canvas does not exits.";
+
+const updateScore = (data) => {
+	scoresElement.innerHTML = `Player One: ${data.p1.score} || Player Two: ${data.p2.score}`;
+}
+
+export {
+	canvasElement,
+	getCanvasContext,
+	scoresElement,
+	updateScore
+};
