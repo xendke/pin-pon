@@ -1,10 +1,11 @@
 class Player {
 	constructor(ws) {
-		this.registerKeyboardHandler();
+		this.bindKeyboardControls();
+		this.bindButtonControls();
 		this.side = '';
 		this.ws = ws;
 	}
-	registerKeyboardHandler() {
+	bindKeyboardControls() {
 		if(document.onkeydown) console.log('onkeydown exists?');
 
 		document.onkeydown = (e) => {
@@ -22,6 +23,25 @@ class Player {
 			if(data.direction !== ''){
 				this.ws.send(JSON.stringify(data));
 			}
+		}
+	}
+	bindButtonControls() {
+		const upButton = document.getElementById('upButton');;
+		const downButton = document.getElementById('downButton');;
+	
+		upButton.onclick = () => {
+			this.ws.send(JSON.stringify({
+				type: 'move',
+				direction: 'UP',
+				side: this.side,
+			}));	
+		}
+		downButton.onclick = () => {
+			this.ws.send(JSON.stringify({
+				type: 'move',
+				direction: 'DOWN',
+				side: this.side,
+			}));	
 		}
 	}
 	setSide(side) {

@@ -27,6 +27,21 @@
       align-items: center;
       height: 100px;
       width: 300px; /* should be same as width of canvas */
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .controls {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 73px;
+    }
+    .controls div {
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
     }
   </style>
 </head>
@@ -36,6 +51,10 @@
     <span>0</span>
     <span>VS</span>
     <span>0</span>
+  </div>
+  <div class="controls">
+    <div id="upButton">&#9650;</div>
+    <div id="downButton">&#9660;</div>
   </div>
   <script type="module" src="js/init.js"></script>
 </body>
