@@ -4,10 +4,39 @@
   <meta charset="utf-8">
   <title>Pin Pon</title>
   <meta name="author" content="xendke">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Sarpanch&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+    #gameCanvas {
+      display: block;
+    }
+    #scores {
+      font-family: 'Sarpanch', sans-serif;
+      font-weight: 900;
+      font-size: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100px;
+      width: 300px; /* should be same as width of canvas */
+    }
+  </style>
 </head>
 <body>
   <canvas id="gameCanvas" width="300" height="300" style="border:1px solid #000000;"></canvas>
-  <div id="scores"></div>
+  <div id="scores">
+    <span>0</span>
+    <span>VS</span>
+    <span>0</span>
+  </div>
   <script type="module" src="js/init.js"></script>
 </body>
 </html>
