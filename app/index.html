@@ -6,47 +6,10 @@
   <meta name="author" content="xendke">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Sarpanch&display=swap" rel="stylesheet">
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 100vh;
-      margin: 0;
-    }
-    #gameCanvas {
-      display: block;
-    }
-    #scores {
-      font-family: 'Sarpanch', sans-serif;
-      font-weight: 900;
-      font-size: 45px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100px;
-      width: 300px; /* should be same as width of canvas */
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .controls {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 73px;
-    }
-    .controls div {
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-    }
-  </style>
+  <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-  <canvas id="gameCanvas" width="300" height="300" style="border:1px solid #000000;"></canvas>
+  <canvas id="gameCanvas" width="300" height="300"></canvas>
   <div id="scores">
     <span>0</span>
     <span>VS</span>

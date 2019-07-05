@@ -1,0 +1,40 @@
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
+	margin: 0;
+	background: black;
+	color: white;
+}
+#gameCanvas {
+	display: block;
+	border: 1px solid white;
+}
+#scores {
+	font-family: 'Sarpanch', sans-serif;
+	font-weight: 900;
+	font-size: 45px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 100px;
+	width: 300px; /* should be same as width of canvas */
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.controls {
+	font-size: 25px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 73px;
+}
+.controls div {
+	cursor: pointer;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+}

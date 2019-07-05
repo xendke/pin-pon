@@ -18,7 +18,7 @@ class Paddle {
 
 		ctx.beginPath();
 		ctx.rect(x, y, width, height);
-		ctx.fillStyle = "#000000";
+		ctx.fillStyle = "#FFFFFF";
 		ctx.fill();
 		ctx.closePath();
 
