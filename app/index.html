@@ -9,15 +9,27 @@
   <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-  <canvas id="gameCanvas" width="300" height="300"></canvas>
-  <div id="scores">
-    <span>0</span>
-    <span>VS</span>
-    <span>0</span>
+  <div id="introView" class="view">
+    <button id="showJoinViewButton">Join Game</button>
+    <button id="createGameButton">Create Game</button>
   </div>
-  <div class="controls">
-    <div id="upButton">&#9650;</div>
-    <div id="downButton">&#9660;</div>
+  <div id="joinView" class="view" style="display: none">
+    <form>
+      <input type="text" id="roomIdInput"/>
+      <button id="joinGameButton">Join</button>
+    </form>
+  </div>
+  <div id="gameView" style="display: none" class="view">
+      <canvas id="gameCanvas" width="300" height="300"></canvas>
+      <div id="scores">
+        <span>0</span>
+        <span>VS</span>
+        <span>0</span>
+      </div>
+      <div class="controls">
+        <div id="upButton">&#9650;</div>
+        <div id="downButton">&#9660;</div>
+      </div>
   </div>
   <script type="module" src="js/init.js"></script>
 </body>

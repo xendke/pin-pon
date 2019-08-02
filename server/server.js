@@ -32,7 +32,7 @@ wss.on('connection', (ws, req) => {
 	ws.on('message', function incoming(data) {
     data = JSON.parse(data);
     switch(data.type) {
-      case 'player_ready':
+      case 'create_game':
         if(game.players.length <= 2) {
           game.addPlayer(clientId);
           ws.send(JSON.stringify({
